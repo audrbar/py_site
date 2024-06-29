@@ -20,8 +20,9 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-local_css("style/style.css")
+local_css("/style/style.css")
 
+# ------------- Page Begins -----------------------
 st.title("Data Science Projects Demo Website")
 st.header("Data Science Projects Demo Website")
 st.subheader("Data Science Projects Demo Website")
@@ -34,8 +35,7 @@ st.sidebar.header("About")
 is_clicked = st.button("Like")
 sidebar_radio = st.sidebar.radio("Choose your answer:", options=["yes", "no"])
 
-data = pd.read_csv("/Users/audrius/Documents/VCSPython/py_site/data/movies.csv")
+data = pd.DataFrame(np.random.randn(20, 5), columns=["a", "b", "c", "d", "e"])
 st.write(data)
 
-chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-st.bar_chart(chart_data)
+st.bar_chart(data)
