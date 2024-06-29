@@ -165,7 +165,7 @@ cython_debug/
 .idea/
 
 # Data
-/data/
+data/
 docs/
 etc/
 
