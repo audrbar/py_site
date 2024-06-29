@@ -7,18 +7,22 @@ import sys
 
 
 # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Data Science App", page_icon=":🌐:", layout="wide")
+st.set_page_config(
+    page_title="Data Science App",
+    page_icon=":🌐:",
+    layout="wide"
+)
 
 # Use local CSS
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# local_css("/mount/src/py_site/style/style.css")
+local_css("/mount/src/py_site/style/style.css")
 # local_css("Users/audrius/Documents/VCSPython/py_site/style/style.css")
 
 selected = option_menu(
-            menu_title=None,  # required
+            menu_title="Main Meniu",  # required
             options=["Home", "About", "Mortgage Calc", "Data Explorer"],  # required
             icons=["house", "book", "book", "envelope"],  # optional
             menu_icon="cast",  # optional
