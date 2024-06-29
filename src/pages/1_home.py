@@ -2,7 +2,7 @@ from PIL import Image
 import requests
 import json
 import streamlit as st
-import streamlit-lottie as lto
+import streamlit_lottie as lto
 
 # ---------Load Assets------------------
 def load_lottieurl(url):
