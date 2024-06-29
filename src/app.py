@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-from streamlit-option-menu import option_menu
+from streamlit_option_menu import option_menu
 import pandas as pd
 import numpy as np
 import sys
@@ -19,8 +19,8 @@ def local_css(file_name):
 
 selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Projects", "Contact"],  # required
-            icons=["house", "book", "envelope"],  # optional
+            options=["Home", "About", "Mortgage Calc", "Data Explorer"],  # required
+            icons=["house", "book", "book", "envelope"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -38,11 +38,13 @@ selected = option_menu(
         )
 
 if selected == "Home":
-    st.title(f"You have selected {selected}")
-if selected == "Projects":
-    st.title(f"You have selected {selected}")
-if selected == "Contact":
-    st.title(f"You have selected {selected}")
+    st.page_link("pages/1_home.py")
+if selected == "About":
+    st.page_link("pages/2_about.py")
+if selected == "Mortgage Calc":
+    st.page_link("pages/3_mortgage_calc.py")
+if selected == "Data Explorer":
+    st.page_link("pages/4_data_explorer.py")
 
 
 # ------------- Page Begins -----------------------
