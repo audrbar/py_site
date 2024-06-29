@@ -12,7 +12,7 @@ def load_lottieurl(url):
     return r.json()
 
 lottie_coding = load_lottieurl("https://lottie.host/5b073eca-e11c-4391-8593-b28f39ce0870/q0fz2A3kuN.json")
-img_first = Image.open("../../VCSPython/py_site/images/about04.png")
+img_first = Image.open("/mount/src/py_site/images/about04.png")
 
 # ---------Header Section------------------
 with st.container():
