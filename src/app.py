@@ -34,7 +34,7 @@ st.sidebar.header("About")
 is_clicked = st.button("Like")
 sidebar_radio = st.sidebar.radio("Choose your answer:", options=["yes", "no"])
 
-data = pd.read_csv("/Users/audrius/Documents/VCSPython/py_site/data/movies.csv")
+data = pd.read_csv("../data/movies.csv")
 st.write(data)
 
 chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
