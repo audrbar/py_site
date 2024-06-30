@@ -3,6 +3,18 @@ import requests
 import json
 import streamlit as st
 import streamlit_lottie as lto
+import os
+from pathlib import Path
+
+# dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Use local CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+# local_css("/mount/src/py_site/style/style.css")
+local_css(Path("style/style.css"))
 
 # ---------Load Assets------------------
 def load_lottieurl(url):
@@ -12,7 +24,8 @@ def load_lottieurl(url):
     return r.json()
 
 lottie_coding = load_lottieurl("https://lottie.host/5b073eca-e11c-4391-8593-b28f39ce0870/q0fz2A3kuN.json")
-img_first = Image.open("/mount/src/py_site/images/about04.png")
+# img_first = Image.open("/mount/src/py_site/images/about04.png")
+img_first = Image.open(Path("images/about04.png"))
 
 # ---------Header Section------------------
 with st.container():
@@ -38,9 +51,9 @@ with st.container():
 # ----------- My Projects ---------------------
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns((2, 1))
+    left_column, right_column = st.columns(2)
     with left_column:
-        st.image(img_first, width=350)
+        st.image(img_first, width=250)
     with right_column:
         st.subheader("Projects you will find here")
         st.write(
