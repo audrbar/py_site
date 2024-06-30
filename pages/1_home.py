@@ -7,13 +7,32 @@ import os
 from pathlib import Path
 
 # dir_path = os.path.dirname(os.path.realpath(__file__))
-st.set_page_config(st.session_state['page_config'])
-# Use local CSS
+# Set  Page Configuration
+# Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
+page_config = st.set_page_config(
+    page_title="Data Science App",
+    page_icon=":🌐:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+)
+st.session_state['page_config'] = page_config
+
+# ------ Hide Streamlit elements ------
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+# st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# ------- Use local CSS ---------------
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# local_css("/mount/src/py_site/style/style.css")
 local_css(Path("style/style.css"))
 
 # ---------Load Assets------------------
@@ -24,19 +43,19 @@ def load_lottieurl(url):
     return r.json()
 
 lottie_coding = load_lottieurl("https://lottie.host/5b073eca-e11c-4391-8593-b28f39ce0870/q0fz2A3kuN.json")
-# img_first = Image.open("/mount/src/py_site/images/about04.png")
 img_first = Image.open(Path("images/about04.png"))
 
-# ---------Header Section------------------
+# --------- Header Section ------------------
 with st.container():
+    st.title("Data Science Projects Demo Website")
     st.subheader("Hi, I am Audrius :wave:")
     st.write("A Data Scientist from Lithuania.")
     st.write("I am passionate about finding ways to use Python libraries to explore the data sets.")
 
-# -----------What I Do ---------------------
+# ----------- What I Do ---------------------
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2)
+    left_column, right_column = st.columns(2, gap = "small")
     with left_column:
         st.subheader("What I Do")
         st.write(
@@ -51,7 +70,7 @@ with st.container():
 # ----------- My Projects ---------------------
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2)
+    left_column, right_column = st.columns(2, gap = "small")
     with left_column:
         st.image(img_first, width=250)
     with right_column:
@@ -65,7 +84,7 @@ with st.container():
             """
         )
 
-# ---- CONTACT ----
+# -------------- Contac me --------------
 with st.container():
     st.write("---")
     st.header("Get In Touch With Me!")

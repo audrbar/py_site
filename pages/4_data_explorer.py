@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from deta import Deta
 
 st.set_page_config(st.session_state['page_config'])
 
@@ -24,7 +25,7 @@ upload_file = st.file_uploader('Upload a file containing data', on_change=change
 # if upload_file is not None:
 if st.session_state["file_csv"] == "done":
     # Read the file to a dataframe using pandas
-    df = pd.read_csv(upload_file)
+    df = pd.read_csv(upload_file) # type: ignore
     progress_bar = st.progress(0)
     for completed in range(100):
         time.sleep(0.03)
