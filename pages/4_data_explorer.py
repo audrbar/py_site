@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
+st.set_page_config(st.session_state['page_config'])
+
 # State management
 if "file_csv" not in st.session_state:
     st.session_state["file_csv"] = "not done"

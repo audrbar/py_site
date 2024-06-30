@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 # dir_path = os.path.dirname(os.path.realpath(__file__))
-
+st.set_page_config(st.session_state['page_config'])
 # Use local CSS
 def local_css(file_name):
     with open(file_name) as f:

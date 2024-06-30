@@ -7,19 +7,31 @@ from pathlib import Path
 
 
 # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(
+page_config = st.set_page_config(
     page_title="Data Science App",
     page_icon=":🌐:",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
 )
+st.session_state['page_config'] = page_config
+
+# --- HIDE STREAMLIT STYLE ---
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+# st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Use local CSS
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
+# def local_css(file_name):
+#     with open(file_name) as f:
+#         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 # local_css("/mount/src/py_site/style/style.css")
-local_css(Path("style/style.css"))
+# local_css(Path("style/style.css"))
 
 # ------------- Page Begins -----------------------
 st.title("Data Science Projects Demo Website")
@@ -33,12 +45,12 @@ is_clicked = st.button("Like")
 if is_clicked:
     st.balloons()
 
-st.sidebar.header("About")
+
 with st.sidebar:
     selected = option_menu(
                 menu_title="Main Meniu",  # required
                 options=["Home", "About", "Mortgage Calc", "Data Explorer"],  # required
-                icons=["house", "book", "book", "envelope"],  # optional
+                icons=["house", "book", "book", "envelope"],  # # https://icons.getbootstrap.com/
                 menu_icon="cast",  # optional
                 default_index=0,  # optional
                 # orientation="horizontal",

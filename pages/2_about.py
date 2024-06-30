@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(st.session_state['page_config'])
+
 st.title("About")
 st.write("This is the about page")
 
