@@ -4,7 +4,34 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-st.set_page_config(st.session_state['page_config'])
+# dir_path = os.path.dirname(os.path.realpath(__file__))
+# Set  Page Configuration
+# Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
+page_config = st.set_page_config(
+    page_title="Data Science App",
+    page_icon=":🌐:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+)
+st.session_state['page_config'] = page_config
+
+# ------ Hide Streamlit elements ------
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+# st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# ------- Use local CSS ---------------
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css(Path("style/style.css"))
 
 # ------------- Page Begins -----------------------
 st.title("Data Science Projects Demo Website")
