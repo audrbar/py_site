@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import math
 
+st.set_page_config(st.session_state['page_config'])
+
 st.title("Mortgage Repayments Calculator")
 
 st.write("### Input Data")
