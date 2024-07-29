@@ -9,6 +9,13 @@ from pathlib import Path
 st.set_page_config(st.session_state['page_config'])
 
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+local_css(Path("style/style.css"))
+
 # ---------Load Assets------------------
 def load_lottieurl(url):
     r = requests.get(url)
