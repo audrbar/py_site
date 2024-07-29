@@ -9,13 +9,13 @@ class DBEngine:
     def connect():
         try:
             connection = st.connection("postgresql", type="sql")
-            print("\nConnected to PostgresSQL database. Congratulations!")
+            print("Connected to PostgreSQL database.")
         except (Exception, st.error) as error:
-            raise Exception("Error while connecting to PostgresSQL", error)
+            raise Exception("Error while connecting to PostgreSQL", error)
 
         return connection
 
     def __del__(self):
         if self.connection:
             self.connection.session.close()
-            print('That is it. Connection closed!')
+            print('Connection to PostgreSQL database closed!')

@@ -1,4 +1,3 @@
-from src.db_conn import DBEngine
 from psycopg2 import sql
 
 
@@ -6,8 +5,8 @@ class Projects:
     table_name = "Projects"
     columns = ('project_id', 'project_name', 'project_aim', 'project_budget', 'person_id')
 
-    def __init__(self):
-        self.db_connection = DBEngine()
+    def __init__(self, connection):
+        self.db_connection = connection
 
     def create_table(self):
         query = f"""

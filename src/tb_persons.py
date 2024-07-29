@@ -1,4 +1,3 @@
-from src.db_conn import DBEngine
 from psycopg2 import sql
 
 
@@ -6,8 +5,8 @@ class Persons:
     table_name = "Persons"
     columns = ('person_id', 'firstname', 'lastname', 'salary', 'email')
 
-    def __init__(self):
-        self.db_connection = DBEngine()
+    def __init__(self, connection):
+        self.db_connection = connection
 
     def create_table(self):
         query = f"""
@@ -42,6 +41,19 @@ class Persons:
 
     def select_all(self):
         query = f"SELECT * FROM {self.table_name}"
+        return self.db_connection.connect().query(query)
+
+    def select_assignees_tasks(self):
+        query = f"SELECT CONCAT(p.firstname, ' ', p.lastname) as assignee, t.task_name, t.start_date, t.due_date, \
+                t.status FROM persons as p JOIN persontask as pt ON p.person_id = pt.person_id \
+                JOIN tasks as t ON pt.task_id = t.task_id GROUP BY p.person_id, t.task_name, t.start_date, t.due_date, \
+                t.status ORDER BY p.firstname ASC, t.status ASC"
+        return self.db_connection.connect().query(query)
+
+    def select_managers_projects(self):
+        query = f"SELECT CONCAT(p.firstname, ' ', lastname) as manager, p.email, p.salary, pr.project_name, \
+                pr.project_budget FROM persons as p JOIN projects as pr ON p.person_id = pr.person_id \
+                ORDER BY p.firstname"
         return self.db_connection.connect().query(query)
 
     def has_data(self):

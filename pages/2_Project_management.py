@@ -1,5 +1,6 @@
 import streamlit as st
 from pathlib import Path
+from src.db_conn import DBEngine
 from src.tb_persons import Persons
 from src.tb_projects import Projects
 from src.tb_tasks import Tasks
@@ -22,13 +23,16 @@ def local_css(file_name):
 
 local_css(Path("style/style.css"))
 
-persons_table = Persons()
-projects_table = Projects()
-tasks_table = Tasks()
-person_task_table = PersonTask()
+connection = DBEngine()
+persons_table = Persons(connection)
+projects_table = Projects(connection)
+tasks_table = Tasks(connection)
+person_task_table = PersonTask(connection)
 projects = projects_table.select_projects_managers()
 tasks = tasks_table.select_tasks_assignees()
 persons = persons_table.select_all()
+assignees_tasks = persons_table.select_assignees_tasks()
+select_managers_projects = persons_table.select_managers_projects()
 person_task = person_task_table.select_all()
 
 # --------- Header Section ------------------
@@ -43,8 +47,8 @@ with st.container():
     tab1, tab2, tab3, tab4 = st.tabs(["projects", "tasks", "managers", "assignees"])
     tab1.write(projects)
     tab2.write(tasks)
-    tab3.write(persons)
-    tab4.write(persons)
+    tab3.write(select_managers_projects)
+    tab4.write(assignees_tasks)
 
 
 # -------------- Insert Project --------------
