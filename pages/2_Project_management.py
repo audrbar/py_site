@@ -1,5 +1,7 @@
 import streamlit as st
 from pathlib import Path
+from src.tb_projects import Projects
+from src.db_conn import DBEngine
 
 st.set_page_config(
     page_title="Data Science App",
@@ -21,6 +23,10 @@ local_css(Path("style/style.css"))
 with st.container():
     st.title("Projects Management System")
     st.write("Projects Management System is built on Python and PostgresSQL hosted on Supabase.")
+    projects_table = Projects()
+    pro = projects_table.select_all()
+    st.write(pro)
+
 
 # -------------- Insert Project --------------
 with st.container():
