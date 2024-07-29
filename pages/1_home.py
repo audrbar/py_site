@@ -8,12 +8,14 @@ from pathlib import Path
 
 st.set_page_config(st.session_state['page_config'])
 
+
 # ---------Load Assets------------------
 def load_lottieurl(url):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
+
 
 lottie_coding = load_lottieurl("https://lottie.host/5b073eca-e11c-4391-8593-b28f39ce0870/q0fz2A3kuN.json")
 img_first = Image.open(Path("images/about04.png"))
@@ -28,7 +30,7 @@ with st.container():
 # ----------- What I Do ---------------------
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2, gap = "small")
+    left_column, right_column = st.columns(2, gap="small")
     with left_column:
         st.subheader("What I Do")
         st.write(
@@ -38,12 +40,12 @@ with st.container():
         )
         st.write("[Youtube Channel >](https://www.youtube.com/)")
     with right_column:
-        lto.st_lottie(lottie_coding, height=300, key="coding") # type: ignore
+        lto.st_lottie(lottie_coding, height=300, key="coding")  # type: ignore
 
 # ----------- My Projects ---------------------
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2, gap = "small")
+    left_column, right_column = st.columns(2, gap="small")
     with left_column:
         st.image(img_first, width=250)
     with right_column:

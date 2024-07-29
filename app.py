@@ -22,14 +22,28 @@ hide_st_style = """
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
+            button[type='submit'] {
+                background-color: #04aa6d;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button[type='submit']:hover {
+                background-color: #45a049;
+            }
             </style>
             """
+
+
 # st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # ------- Use local CSS ---------------
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 
 local_css(Path("style/style.css"))
 

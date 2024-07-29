@@ -4,12 +4,20 @@ from pathlib import Path
 
 st.set_page_config(st.session_state['page_config'])
 
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+local_css(Path("style/style.css"))
+
 st.title("About")
 st.write("This is the page about different built in Streamlit possibilities.")
 
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2, gap = "medium")
+    left_column, right_column = st.columns(2, gap="medium")
     with left_column:
         st.link_button("Home", url="/home")
     with right_column:
@@ -19,7 +27,7 @@ with st.container():
 
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2, gap = "medium")
+    left_column, right_column = st.columns(2, gap="medium")
     with left_column:
         with st.expander("Click to read more"):
             st.write("Hello, here are more details on this topic that you are interested in.")
@@ -28,9 +36,9 @@ with st.container():
 
 with st.container():
     st.write("---")
-    left_column, right_column = st.columns(2, gap = "medium")
+    left_column, right_column = st.columns(2, gap="medium")
     with left_column:
-        user_input = st.text_input("Your Favorite Movie?", placeholder = "Type in...")
+        user_input = st.text_input("Your Favorite Movie?", placeholder="Type in...")
         if user_input:
             st.write(f"Your favorite movie is {user_input}.")
     with right_column:
@@ -38,22 +46,21 @@ with st.container():
 
 with st.container():
     st.write("---")
-    tab1 , tab2 = st.tabs(["audio" , "video"])
+    tab1, tab2 = st.tabs(["audio", "video"])
     tab1.write("Relax and listen.")
     tab1.audio("https://www.youtube.com/watch?v=51zjlMhdSTE")
     tab2.write("Awesome video.")
     tab2.video("https://www.youtube.com/watch?v=NTpbbQUBbuo")
 
-
 with st.sidebar:
     selected = option_menu(
-                menu_title="Main Meniu",  # required
-                options=["Home", "About", "Mortgage Calc", "Data Explorer"],  # required
-                icons=["house", "book", "book", "envelope"],  # # https://icons.getbootstrap.com/
-                menu_icon="cast",  # optional
-                default_index=0,  # optional
-                # orientation="horizontal",
-            )
+        menu_title="Main Meniu",  # required
+        options=["Home", "About", "Mortgage Calc", "Data Explorer"],  # required
+        icons=["house", "book", "book", "envelope"],  # # https://icons.getbootstrap.com/
+        menu_icon="cast",  # optional
+        default_index=0,  # optional
+        # orientation="horizontal",
+    )
 
 if selected == "Home":
     st.page_link("pages/1_Home.py")
