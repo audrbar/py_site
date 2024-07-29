@@ -11,8 +11,10 @@ st.set_page_config(st.session_state['page_config'])
 if "file_csv" not in st.session_state:
     st.session_state["file_csv"] = "not done"
 
+
 def change_file_state():
     st.session_state["file_csv"] = "done"
+
 
 # Add a title and intro text
 st.title('Data Set Explorer')
@@ -25,7 +27,7 @@ upload_file = st.file_uploader('Upload a file containing data', on_change=change
 # if upload_file is not None:
 if st.session_state["file_csv"] == "done":
     # Read the file to a dataframe using pandas
-    df = pd.read_csv(upload_file) # type: ignore
+    df = pd.read_csv(upload_file)  # type: ignore
     progress_bar = st.progress(0)
     for completed in range(100):
         time.sleep(0.03)
@@ -43,7 +45,7 @@ if st.session_state["file_csv"] == "done":
     # Create a section for matplotlib figure
     st.header('Plot of Data')
 
-    fig, ax = plt.subplots(1,1)
+    fig, ax = plt.subplots(1, 1)
     count = df['title'].count()
     ax.bar(height=8, x=df['type'], y=count)
     ax.set_xlabel('type')
