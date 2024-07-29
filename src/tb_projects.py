@@ -47,6 +47,12 @@ class Projects:
         query = f"SELECT * FROM {self.table_name}"
         return self.db_connection.connect().query(query)
 
+    def select_projects_managers(self):
+        query = f"SELECT pr.project_name, pr.project_aim, pr.project_budget,\
+                 CONCAT(p.firstname, ' ', p.lastname) as project_manager\
+                 FROM projects as pr JOIN persons as p ON p.person_id = pr.person_id"
+        return self.db_connection.connect().query(query)
+
     def has_data(self):
         query = f"SELECT EXISTS (SELECT 1 FROM {self.table_name} LIMIT 1);"
         self.db_connection.cursor.execute(query)

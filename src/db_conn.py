@@ -1,11 +1,4 @@
-import os
 import streamlit as st
-import psycopg2.extras
-from dotenv import load_dotenv
-from pathlib import Path
-
-
-# load_dotenv(Path("/secrets.toml"))
 
 
 class DBEngine:

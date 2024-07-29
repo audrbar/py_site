@@ -1,6 +1,4 @@
-#! /Users/audrius/Documents/VCSPython/py_projmngpg/bin/python3
-
-from db_conn import DBEngine
+from src.db_conn import DBEngine
 from psycopg2 import sql
 
 
@@ -44,8 +42,7 @@ class Persons:
 
     def select_all(self):
         query = f"SELECT * FROM {self.table_name}"
-        self.db_connection.cursor.execute(query)
-        return self.db_connection.cursor.fetchall()
+        return self.db_connection.connect().query(query)
 
     def has_data(self):
         query = f"SELECT EXISTS (SELECT 1 FROM {self.table_name} LIMIT 1);"

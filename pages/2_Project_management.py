@@ -1,7 +1,10 @@
 import streamlit as st
 from pathlib import Path
+from src.tb_persons import Persons
 from src.tb_projects import Projects
-from src.db_conn import DBEngine
+from src.tb_tasks import Tasks
+from src.tb_persontask import PersonTask
+
 
 st.set_page_config(
     page_title="Data Science App",
@@ -19,13 +22,29 @@ def local_css(file_name):
 
 local_css(Path("style/style.css"))
 
+persons_table = Persons()
+projects_table = Projects()
+tasks_table = Tasks()
+person_task_table = PersonTask()
+projects = projects_table.select_projects_managers()
+tasks = tasks_table.select_tasks_assignees()
+persons = persons_table.select_all()
+person_task = person_task_table.select_all()
+
 # --------- Header Section ------------------
 with st.container():
     st.title("Projects Management System")
-    st.write("Projects Management System is built on Python and PostgresSQL hosted on Supabase.")
-    projects_table = Projects()
-    pro = projects_table.select_all()
-    st.write(pro)
+    st.write("Application is built with *Python*, hosted on *Streamlit Community Cloud*\
+            and it's data are stored in *PostgreSQL*, hosted on _Supabase_.")
+
+with st.container():
+    st.write("---")
+    st.write("The section explores the content:  *projects*, **tasks**, _managers_, **assignees**.")
+    tab1, tab2, tab3, tab4 = st.tabs(["projects", "tasks", "managers", "assignees"])
+    tab1.write(projects)
+    tab2.write(tasks)
+    tab3.write(persons)
+    tab4.write(persons)
 
 
 # -------------- Insert Project --------------
