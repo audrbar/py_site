@@ -2,7 +2,13 @@ import streamlit as st
 import pandas as pd
 import math
 
-st.set_page_config(st.session_state['page_config'])
+st.set_page_config(
+    page_title="Data Science App",
+    page_icon=":🌐:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+)
 
 st.title("Mortgage Repayments Calculator")
 
