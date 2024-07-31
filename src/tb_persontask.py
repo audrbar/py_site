@@ -40,7 +40,7 @@ class PersonTask:
 
     def select_all(self):
         query = f"SELECT * FROM {self.table_name}"
-        return self.db_connection.connect().query(query)
+        return self.db_connection.query(query)
 
     def has_data(self):
         query = f"SELECT EXISTS (SELECT 1 FROM {self.table_name} LIMIT 1);"
