@@ -34,7 +34,7 @@ def main():
     projects_table = Projects(connection.connection)
     tasks_table = Tasks(connection.connection)
     person_task_table = PersonTask(connection.connection)
-    projects = projects_table.select_all()
+    projects = projects_table.select_projects_managers()
     tasks = tasks_table.select_tasks_assignees()
     persons = persons_table.select_all()
     assignees_tasks = persons_table.select_assignees_tasks()
