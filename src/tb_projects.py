@@ -1,6 +1,5 @@
 """Projects class and class Methods"""
 import streamlit as st
-import pandas as pd
 from psycopg2 import sql
 from sqlalchemy import update, insert, delete
 from sqlalchemy.orm import sessionmaker
@@ -118,7 +117,7 @@ class Projects:
 
     def set_delete_project(self, project_name):
         """
-        Delete (SQLAlchemy) Selected Project selected by project name
+        Delete (SQLAlchemy) Selected Project by project name
         :param project_name: string selected by user
         :return: None
         """

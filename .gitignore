@@ -175,3 +175,6 @@ etc/
 # Database
 *.db
 *.rdb
+
+# Dravio
+*.drawio

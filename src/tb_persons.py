@@ -1,6 +1,5 @@
 """Persons class and class Methods"""
 import streamlit as st
-import pandas as pd
 from psycopg2 import sql
 from sqlalchemy import update, insert, delete
 from sqlalchemy.orm import sessionmaker
@@ -20,9 +19,9 @@ class Person(Base):
     email = Column(String, nullable=False)
 
     def __repr__(self) -> str:
-        return (f"<Person(project_id={self.project_id}, project_name={self.project_name}, "
-                f"project_aim={self.project_aim}, project_budget={self.project_budget}, "
-                f"person_id={self.person_id})>")
+        return (f"<Person(person_id={self.person_id}, firstname={self.firstname}, "
+                f"lastname={self.lastname}, salary={self.salary}, "
+                f"email={self.email})>")
 
 
 class Persons:
@@ -71,10 +70,10 @@ class Persons:
         :param: None
         :return object: returns table object
         """
-        query = f"SELECT p.person_id, CONCAT(p.firstname, ' ', p.lastname) as assignee, t.task_name, t.start_date, t.due_date, \
-                t.status FROM persons as p JOIN persontask as pt ON p.person_id = pt.person_id \
-                JOIN tasks as t ON pt.task_id = t.task_id GROUP BY p.person_id, t.task_name, t.start_date, t.due_date, \
-                t.status ORDER BY p.firstname ASC, t.status ASC"
+        query = f"SELECT p.person_id, CONCAT(p.firstname, ' ', p.lastname) as assignee, t.task_name, t.start_date, \
+                t.due_date, t.status FROM persons as p JOIN persontask as pt ON p.person_id = pt.person_id \
+                JOIN tasks as t ON pt.task_id = t.task_id GROUP BY p.person_id, t.task_name, t.start_date, \
+                t.due_date, t.status ORDER BY p.firstname ASC, t.status ASC"
         return self.db_connection.query(query)
 
     def select_managers_projects(self) -> object:
@@ -83,9 +82,9 @@ class Persons:
         :param: None
         :return object: returns table object
         """
-        query = f"SELECT p.person_id, CONCAT(p.firstname, ' ', lastname) as manager, p.email, p.salary, pr.project_name, \
-                pr.project_budget FROM persons as p JOIN projects as pr ON p.person_id = pr.person_id \
-                ORDER BY p.firstname"
+        query = f"SELECT p.person_id, CONCAT(p.firstname, ' ', lastname) as manager, p.email, p.salary, \
+                pr.project_name, pr.project_budget FROM persons as p JOIN projects as pr ON \
+                p.person_id = pr.person_id ORDER BY p.firstname"
         return self.db_connection.query(query)
 
     def set_persons_salary(self, fullname, salary, person_id) -> None:
@@ -97,12 +96,10 @@ class Persons:
         :return: None
         """
         stmt = (update(Person).where(Person.person_id == person_id).values({"salary": int(salary)}))
-        query = f"UPDATE {self.table_name} SET salary = salary * 1.5 WHERE person_id = '{person_id}'"
         self.session.execute(stmt)
         self.session.commit()
         return st.write(f"The salary for _{fullname}_ was updated to _{salary}_.")
 
-    # 'firstname', 'lastname', 'salary', 'email'
     def set_new_person(self, firstname: str, lastname: str, email: str, salary: float) -> None:
         """
         Insert (SQLAlchemy) New Person with a values provided by the user with a check if person already exist
@@ -122,22 +119,14 @@ class Persons:
             self.session.commit()
             return st.write(f"The new person _{firstname + ' ' + lastname}_ was added.")
 
-    def has_data(self):
-        query = f"SELECT EXISTS (SELECT 1 FROM {self.table_name} LIMIT 1);"
-        self.db_connection.cursor.execute(query)
-        is_data = self.db_connection.cursor.fetchall()[0][0]
-        if is_data:
-            print(f"Table '{self.table_name}' has some data already.")
-        else:
-            print(f"Table '{self.table_name}' has any data.")
-        return is_data
-
-    def delete_all(self):
-        query = f"TRUNCATE ONLY {self.table_name} RESTART IDENTITY"
-        self.db_connection.cursor.execute(query)
-        print(f"All Data from table '{self.table_name}' were deleted.")
-
-    def drop_table(self):
-        query = f"DROP TABLE IF EXISTS {self.table_name}"
-        self.db_connection.cursor.execute(query)
-        print(f"Table '{self.table_name}' was entirely deleted and indexes reset.")
+    def set_delete_person(self, fullname, person_id):
+        """
+        Delete (SQLAlchemy) Selected Person by person id
+        :param fullname: string selected by user
+        :param person_id: string selected by user
+        :return: None
+        """
+        stmt = delete(Person).where(Person.person_id == person_id)
+        self.session.execute(stmt)
+        self.session.commit()
+        return st.write(f"The person _{fullname}_ was deleted.")
