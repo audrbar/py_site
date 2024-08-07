@@ -1,16 +1,23 @@
 import streamlit as st
 import pandas as pd
 import math
+from Home import footer_section
 
 st.set_page_config(
     page_title="Data Science App",
-    page_icon=":🌐:",
+    page_icon=":globe_with_meridians:",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items=None
 )
-
-st.title("Mortgage Repayments Calculator")
+hide_st_style = """
+            <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.write("### Input Data")
 col1, col2 = st.columns(2)
@@ -69,3 +76,5 @@ df = pd.DataFrame(
 st.write("### Payment Schedule")
 payments_df = df[["Year", "Remaining Balance"]].groupby("Year").min()
 st.line_chart(payments_df)
+
+footer_section()

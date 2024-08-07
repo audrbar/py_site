@@ -1,5 +1,6 @@
 import streamlit as st
 import streamlit_lottie as lto
+from datetime import datetime
 from PIL import Image
 import requests
 from pathlib import Path
@@ -8,26 +9,25 @@ from pathlib import Path
 # dir_path = os.path.dirname(os.path.realpath(__file__))
 # Set  Page Configuration
 # Find more emojis here: https://www.webfx.com/tools/emoji-cheat-sheet/
+# ------ Hide Streamlit elements ------
 st.set_page_config(
     page_title="Data Science App",
-    page_icon=":🌐:",
+    page_icon=":globe_with_meridians:",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items=None
 )
 
+hide_st_style = """
+            <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+            </style>
+            """
 
-# ------ Hide Streamlit elements ------
-# hide_st_style = """
-#             <style>
-#                 #MainMenu {visibility: hidden;}
-#                 footer {visibility: hidden;}
-#                 header {visibility: hidden;}
-#             </style>
-#             """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
-
-# st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # ------- Use local CSS ---------------
 def local_css(file_name):
@@ -48,6 +48,18 @@ def load_lottieurl(url):
 
 lottie_coding = load_lottieurl("https://lottie.host/5b073eca-e11c-4391-8593-b28f39ce0870/q0fz2A3kuN.json")
 img_first = Image.open(Path("images/about04.png"))
+
+
+def footer_section() -> None:
+    """
+    Render Streamlit Page footer section with Streamlit Title and Write Methods
+    :return: None
+    """
+    with st.container():
+        st.write("---")
+        year = datetime.now().year
+        st.write(f"© {year} audrbar. All rights reserved.")
+
 
 # --------- Header Section ------------------
 with st.container():
@@ -106,3 +118,5 @@ with st.container():
         st.markdown(contact_form, unsafe_allow_html=True)
     with right_column:
         st.empty()
+
+footer_section()
