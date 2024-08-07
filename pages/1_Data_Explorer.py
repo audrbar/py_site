@@ -3,17 +3,19 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from Home import footer_section
 from deta import Deta
 
+
+# ------ Hide Streamlit elements ------
 st.set_page_config(
     page_title="Data Science App",
-    page_icon=":🌐:",
+    page_icon=":globe_with_meridians:",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items=None
 )
 
-# ------ Hide Streamlit elements ------
 hide_st_style = """
             <style>
                 #MainMenu {visibility: hidden;}
@@ -21,6 +23,8 @@ hide_st_style = """
                 header {visibility: hidden;}
             </style>
             """
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # State management
 if "file_csv" not in st.session_state:
@@ -70,3 +74,5 @@ if st.session_state["file_csv"] == "done":
 
 else:
     st.write('Please upload a .csv file')
+
+footer_section()

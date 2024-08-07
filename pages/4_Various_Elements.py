@@ -1,17 +1,18 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from Home import footer_section
 
 
+# ------ Hide Streamlit elements ------
 st.set_page_config(
     page_title="Data Science App",
-    page_icon=":🌐:",
+    page_icon=":globe_with_meridians:",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items=None
 )
 
-# ------ Hide Streamlit elements ------
 hide_st_style = """
             <style>
                 #MainMenu {visibility: hidden;}
@@ -19,10 +20,10 @@ hide_st_style = """
                 header {visibility: hidden;}
             </style>
             """
-
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.title("Various Streamlit Elements")
-st.write("This is the page about different built in Streamlit possibilities.")
+st.write("This page explores different built in Streamlit possibilities.")
 
 with st.container():
     st.write("---")
@@ -74,3 +75,5 @@ with st.container():
 
 st.write("---")
 st.sidebar.radio("Do you like this site?", options=["yes", "no"])
+
+footer_section()

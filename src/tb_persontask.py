@@ -1,3 +1,4 @@
+"""PersonTask class and class Methods"""
 from psycopg2 import sql
 
 
