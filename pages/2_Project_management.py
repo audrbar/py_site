@@ -1,8 +1,5 @@
 """Streamlit Page render script"""
 import streamlit as st
-import pandas as pd
-import numpy as np
-from datetime import datetime
 from Home import footer_section
 from src.db_conn import DBEngine
 from src.tb_persons import Persons
@@ -28,16 +25,6 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-
-
-def local_css(file_name) -> None:
-    """
-    Read a css file with Streamlit Markdown Method by its name
-    :param file_name: file to read name
-    :return: None
-    """
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
 def header_section() -> None:
@@ -106,12 +93,11 @@ def find_project_id(df, project_name) -> int:
 
 
 def main():
-    # local_css(Path("style/style.css"))
     connection = DBEngine()
     persons_table = Persons(connection.connection)
     projects_table = Projects(connection.connection)
     tasks_table = Tasks(connection.connection)
-    person_task_table = PersonTask(connection.connection)
+    PersonTask(connection.connection)
     projects = projects_table.get_all_projects()
     persons = persons_table.get_all_persons()
     tasks = tasks_table.get_tasks_assignees()
@@ -136,8 +122,8 @@ def main():
             st.write('Edit different aspects of your projects and choose for that the tab accordingly \
                 and check the results write above.')
         with right_column:
-            tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["assign manager", "edit budget", "delete project",
-                                                          "assign assignee", "change status", "set salary"])
+            tab1, tab2, tab3, tab4, tab5 = st.tabs(["assign manager", "edit budget", "assign assignee",
+                                                    "change status", "set salary"])
             with tab1:
                 with st.form('project_manager', clear_on_submit=True):
                     st.write("Assign Project Manager:")
@@ -161,17 +147,8 @@ def main():
                         st.cache_data.clear()
                     else:
                         st.write('To succeed please select and fill inputs and smash a Submit button.')
+
             with tab3:
-                with st.form('delete_project', clear_on_submit=True):
-                    st.write("Delete Project:")
-                    select_project = st.selectbox('Select a Project to delete', make_a_list(projects, 'project_name'))
-                    submit_button = st.form_submit_button(label='Submit')
-                    if submit_button:
-                        projects_table.set_delete_project(select_project)
-                        st.cache_data.clear()
-                    else:
-                        st.write('To succeed please select input and smash a Submit button.')
-            with tab4:
                 with st.form('assign_assignee', clear_on_submit=True):
                     st.write('Assign Task Assignee:')
                     select_task = st.selectbox('Select a task to edit:', make_a_list(tasks, 'task_name'))
@@ -184,7 +161,7 @@ def main():
                         st.cache_data.clear()
                     else:
                         st.write('To succeed please select and fill inputs and smash a Submit button.')
-            with tab5:
+            with tab4:
                 with st.form('change_status', clear_on_submit=True):
                     st.write('Change Task status:')
                     select_task = st.selectbox('Select a task to edit:', make_a_list(tasks, 'task_name'))
@@ -195,7 +172,7 @@ def main():
                         st.cache_data.clear()
                     else:
                         st.write('To succeed please select input and smash a Submit button.')
-            with tab6:
+            with tab5:
                 with st.form('set_salary', clear_on_submit=True):
                     st.write('Set Persons salary:')
                     select_person = st.selectbox('Select a person to edit:',
@@ -271,6 +248,49 @@ def main():
                             st.cache_data.clear()
                         else:
                             st.write('To succeed please fill inputs and smash a Submit button.')
+
+    # -------------- Delete Items Section --------------
+    with (st.container()):
+        st.write("---")
+        left_column, right_column = st.columns([1, 3])
+        with left_column:
+            st.header("Get Ride of the Item")
+            st.write('Delete selected unnecessary items.')
+        with right_column:
+            tab1, tab2, tab3 = st.tabs(["delete task", "delete person", "delete project"])
+            with tab1:
+                with st.form('delete_task', clear_on_submit=True):
+                    st.write("Delete task:")
+                    select_task = st.selectbox('Select a Task to delete', make_a_list(tasks, 'task_name'))
+                    submit_button = st.form_submit_button(label='Submit')
+                    if submit_button:
+                        tasks_table.set_delete_task(select_task)
+                        st.cache_data.clear()
+                    else:
+                        st.write('To succeed please select input and smash a Submit button.')
+            with tab2:
+                with st.form('delete_person', clear_on_submit=True):
+                    st.write("Delete person:")
+                    select_person = st.selectbox('Select a Person to delete',
+                                                 make_a_list(persons, 'firstname', 'lastname'))
+                    select_person_id = find_person_id(persons, select_person)
+                    submit_button = st.form_submit_button(label='Submit')
+                    if submit_button:
+                        persons_table.set_delete_person(select_person, select_person_id)
+                        st.cache_data.clear()
+                    else:
+                        st.write('To succeed please select input and smash a Submit button.')
+            with tab3:
+                with st.form('delete_project', clear_on_submit=True):
+                    st.write("Delete Project:")
+                    select_project = st.selectbox('Select a Project to delete',
+                                                  make_a_list(projects, 'project_name'))
+                    submit_button = st.form_submit_button(label='Submit')
+                    if submit_button:
+                        projects_table.set_delete_project(select_project)
+                        st.cache_data.clear()
+                    else:
+                        st.write('To succeed please select input and smash a Submit button.')
 
     footer_section()
 

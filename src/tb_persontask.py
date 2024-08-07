@@ -1,5 +1,23 @@
 """PersonTask class and class Methods"""
 from psycopg2 import sql
+from sqlalchemy import update, insert, delete
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Float
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False)
+Base = declarative_base()
+
+
+class PersTask(Base):
+    __tablename__ = 'persontask'
+    person_task_id = Column(Integer, primary_key=True)
+    person_id = Column(String, nullable=False)
+    task_id = Column(String, nullable=False)
+
+    def __repr__(self) -> str:
+        return (f"<Person(person_task_id={self.person_task_id}, person_id={self.person_id}, "
+                f"task_id={self.task_id})>")
 
 
 class PersonTask:
@@ -8,6 +26,7 @@ class PersonTask:
 
     def __init__(self, connection):
         self.db_connection = connection
+        self.session = connection.session
 
     def create_table(self):
         query = f"""

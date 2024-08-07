@@ -65,7 +65,7 @@ class Tasks:
         self.db_connection.connection.commit()
         print(f"Data were inserted into the table '{self.table_name}'.")
 
-    def get_all_tasks(self) -> object:
+    def __get_all_tasks(self) -> object:
         """
         Gets (Streamlit Query) all tasks from table
         :param: None
@@ -80,8 +80,9 @@ class Tasks:
         :param: None
         :return object: returns table object
         """
-        query = f"SELECT t.task_id, t.task_name, t.start_date, t.due_date, t.status, CONCAT(p.firstname, ' ', p.lastname)\
-        as Assignee FROM tasks as t JOIN persons as p ON t.person_id = p.person_id ORDER BY t.task_id"
+        query = f"SELECT t.task_id, t.task_name, t.start_date, t.due_date, t.status, \
+                CONCAT(p.firstname, ' ', p.lastname) as Assignee FROM tasks as t JOIN persons as p ON \
+                t.person_id = p.person_id ORDER BY t.task_id"
         return self.db_connection.query(query)
 
     def set_task_assignee(self, task_name, fullname, person_id) -> None:
@@ -110,7 +111,7 @@ class Tasks:
         return st.write(f"The status for the task _{task_name}_ was updated to _{status}_.")
 
     def set_new_task(self, selected_project: str, task_name: str, start_date: Date, due_date: Date, person_id: int,
-                     project_id: int, status: str = 'not_started', done_date: Date = None) -> None:
+                     project_id: int, status: str = 'not_started') -> None:
         """
         Insert (SQLAlchemy) New Task with a values provided by the user with a check if task already exist
         :param selected_project: string provided for message purpose
@@ -120,12 +121,11 @@ class Tasks:
         :param status: string - default value
         :param person_id: number selected by user
         :param project_id: number selected by user
-        :param done_date: Date - optional, default empty
         :return: None
         """
         stmt = insert(Task).values({'task_name': task_name, 'start_date': start_date, 'due_date': due_date,
                                     'person_id': person_id, 'project_id': project_id, 'status': status})
-        df = self.get_all_tasks()
+        df = self.__get_all_tasks()
         if task_name in df['task_name'].values:
             return st.write(f"The project _{task_name}_ already exists.")
         else:
@@ -133,37 +133,13 @@ class Tasks:
             self.session.commit()
             return st.write(f"The new task _{task_name}_ was for the project _{selected_project}_ was created.")
 
-    def append_data(self, data):
-        for item in data:
-            query = (f"INSERT INTO {self.table_name} (task_name, start_date, due_date, status, person_id,"
-                     f" project_id) VALUES {item}")
-            self.db_connection.cursor.execute(query)
-        self.db_connection.connection.commit()
-        print(f"Table '{self.table_name}' were appended with new data.")
-
-    def update_done_date(self, task_id, done_date):
-        query = (f"UPDATE {self.table_name} SET done_date = {done_date} AND status = 'done' "
-                 f"WHERE person_id = '{task_id}'")
-        self.db_connection.cursor.execute(query)
-        self.db_connection.connection.commit()
-        print("Task's status was changed.")
-
-    def has_data(self):
-        query = f"SELECT EXISTS (SELECT 1 FROM {self.table_name} LIMIT 1);"
-        self.db_connection.cursor.execute(query)
-        is_data = self.db_connection.cursor.fetchall()[0][0]
-        if is_data:
-            print(f"Table '{self.table_name}' has some data already.")
-        else:
-            print(f"Table '{self.table_name}' has any data.")
-        return is_data
-
-    def delete_all(self):
-        query = f"TRUNCATE ONLY {self.table_name} RESTART IDENTITY"
-        self.db_connection.cursor.execute(query)
-        print(f"All Data from table '{self.table_name}' were deleted.")
-
-    def drop_table(self):
-        query = f"DROP TABLE IF EXISTS {self.table_name}"
-        self.db_connection.cursor.execute(query)
-        print(f"Table '{self.table_name}' was entirely deleted and indexes reset.")
+    def set_delete_task(self, task_name):
+        """
+        Delete (SQLAlchemy) Selected Task by task name
+        :param task_name: string selected by user
+        :return: None
+        """
+        stmt = delete(Task).where(Task.task_name == task_name)
+        self.session.execute(stmt)
+        self.session.commit()
+        return st.write(f"The project _{task_name}_ was deleted.")
