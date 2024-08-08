@@ -20,13 +20,12 @@ These are sources of main pages of a respected app:
 
 ## Installing Streamlit
 
-_You can use the requirements.txt file to install all the required libraries, 
+_You can use the [requirements.txt](requirements.txt) file (red by command `pip freeze > .\requirements.txt`) to install all the required libraries, 
 or if you already have pandas and numpy, you can just install streamlit by opening 
 a command prompt / terminal and typing in:_
 
-`pip freeze > .\requirements.txt`
-`pip install -r .\requirements.txt`
-or
+`pip install -r .\requirements.txt`<br>
+or<br>
 `pip install streamlit`
 
 ## Running Streamlit
@@ -38,18 +37,20 @@ _Once Streamlit has been installed you can run the select file by typing the fol
 ## Data Sources
 _For testing purposes the initial data set may be used:_
 
-| File Name       | Source         | Source Link                   |
-|-----------------|----------------|-------------------------------|
-| initial_data.py | Some Demo Data | [LINK](./src/initial_data.py) |
-
+| File Name       | Source                                | Source Link                   |
+|-----------------|---------------------------------------|-------------------------------|
+| movies.csv      | Some Demo Data for Data Explorer      | [LINK](./data/movies.csv)     |
+| initial_data.py | Some Demo Data for Project Management | [LINK](./src/initial_data.py) |
 ## DataBase Diagram
 _DataBase Diagram was used to construct the database structure_
-<br>
+
 ![DataBase Diagram](./data/tb_diagram.png)
 <br>
 ### 🧪 Running tests
 
-TBC.
+_There are tests writen for connection testing in [test directory](./data/test_conn.py). You can run it in console by command:_
+
+`pytest`
 
 ## 🎅 Authors
 
