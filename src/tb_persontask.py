@@ -1,9 +1,8 @@
 """PersonTask class and class Methods"""
 from psycopg2 import sql
-from sqlalchemy import update, insert, delete
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import sessionmaker
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False)
 Base = declarative_base()
