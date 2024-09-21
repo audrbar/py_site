@@ -1,11 +1,10 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import time
-from Home import footer_section
-from deta import Deta
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import streamlit as st
+
+from Home import footer_section
 
 # ------ Hide Streamlit elements ------
 hide_st_style = """
