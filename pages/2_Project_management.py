@@ -8,14 +8,6 @@ from src.tb_tasks import Tasks
 from src.tb_persontask import PersonTask
 
 # ------ Hide Streamlit elements ------
-st.set_page_config(
-    page_title="Data Science App",
-    page_icon=":globe_with_meridians:",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items=None
-)
-
 hide_st_style = """
             <style>
                 #MainMenu {visibility: hidden;}
@@ -38,7 +30,7 @@ def header_section() -> None:
                 and it's data are stored in *PostgreSQL*, hosted on _Supabase_.")
 
 
-def next_section(section_name, section_description) -> None:
+def next_section(section_name: str, section_description) -> None:
     """
     Render Streamlit Page section with Streamlit Header and Write Methods
     :param section_name string

@@ -6,7 +6,7 @@
 Hi :wave:, and welcome to the Data Science Website build on Streamlit.
 
 ## Description
-Application is built with *Python*, hosted on *Streamlit Community Cloud* and it's data are 
+Application is built with *Python*, hosted on *Streamlit Community Cloud* and it's data are
 stored in *PostgreSQL*, hosted on _Supabase_.
 
 ## Pages
@@ -20,8 +20,8 @@ These are sources of main pages of a respected app:
 
 ## Installing Streamlit
 
-_You can use the [requirements.txt](requirements.txt) file (red by command `pip freeze > .\requirements.txt`) to install all the required libraries, 
-or if you already have pandas and numpy, you can just install streamlit by opening 
+_You can use the [requirements.txt](requirements.txt) file (red by command `pip freeze > .\requirements.txt`) to install all the required libraries,
+or if you already have pandas and numpy, you can just install streamlit by opening
 a command prompt / terminal and typing in:_
 
 `pip install -r .\requirements.txt`<br>
@@ -62,4 +62,4 @@ Distributed under the MIT License. See LICENSE.txt for more information.
 
 ## 🔗 Other resources
 
-No other resources.
+Langchain PDF App: [Langchain](https://www.youtube.com/watch?v=wUAUdEw5oxM)
