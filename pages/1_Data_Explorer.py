@@ -8,14 +8,6 @@ from deta import Deta
 
 
 # ------ Hide Streamlit elements ------
-st.set_page_config(
-    page_title="Data Science App",
-    page_icon=":globe_with_meridians:",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items=None
-)
-
 hide_st_style = """
             <style>
                 #MainMenu {visibility: hidden;}

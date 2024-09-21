@@ -62,4 +62,4 @@ Distributed under the MIT License. See LICENSE.txt for more information.
 
 ## 🔗 Other resources
 
-No other resources.
+Langchain PDF App: [Langchain](https://www.youtube.com/watch?v=wUAUdEw5oxM)
