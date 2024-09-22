@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -11,12 +10,19 @@ from Home import footer_section
 
 
 def main():
-    load_dotenv()
-    st.set_page_config(page_title="Ask your PDF")
+    hide_st_style = """
+                <style>
+                    #MainMenu {visibility: hidden;}
+                    footer {visibility: hidden;}
+                    header {visibility: hidden;}
+                </style>
+                """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
+    st.title("Ask your PDF")
     st.header("Ask your PDF 💬")
 
     # upload file
-    pdf = st.file_uploader("Upload your PDF", type="pdf")
+    pdf = st.file_uploader("Upload your PDF file to feed large language model:", type="pdf")
 
     # extract the text
     if pdf is not None:
@@ -35,7 +41,7 @@ def main():
         chunks = text_splitter.split_text(text)
 
         # create embeddings
-        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
+        embeddings = OpenAIEmbeddings(**st.secrets.openai)
         knowledge_base = FAISS.from_texts(chunks, embeddings)
 
         # show user input
@@ -43,13 +49,13 @@ def main():
         if user_question:
             docs = knowledge_base.similarity_search(user_question)
 
-            llm = OpenAI()
+            llm = OpenAI(**st.secrets.openai)
             chain = load_qa_chain(llm, chain_type="stuff")
             with get_openai_callback() as cb:
                 response = chain.run(input_documents=docs, question=user_question)
-                st.write(cb)
-
             st.write(response)
+            with st.expander("Click for service details"):
+                st.write(cb)
 
 
 if __name__ == '__main__':
