@@ -33,3 +33,4 @@ seaborn~=0.13.2
 openai~=1.9.0
 regex~=2024.9.11
 tiktoken~=0.7.0
+faiss-cpu~=1.8.0.post1
