@@ -1,7 +1,6 @@
 import time
-
-import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 import streamlit as st
 
 from Home import footer_section
@@ -52,18 +51,24 @@ if st.session_state["file_csv"] == "done":
     st.header('Header of Dataframe')
     st.write(df.head())
 
-    # Create a section for matplotlib figure
-    st.header('Plot of Data')
+    # Create a section for the dataframe data types
+    st.header('Data Types of Dataframe')
+    st.write(df.dtypes)
 
-    fig, ax = plt.subplots(1, 1)
-    count = df['title'].count()
-    ax.bar(height=8, x=df['type'], y=count)
-    ax.set_xlabel('type')
-    ax.set_ylabel('kiekis')
-
+    # Plot the data Pair Plot
+    st.header('Pair Plot of Data')
+    sns.set_theme(style="ticks")
+    fig = sns.pairplot(df)
+    if fig:
+        left_column, right_column = st.columns(2, gap="medium", vertical_alignment="center")
+        with left_column:
+            st.write("Choose variable for data colored mapping:")
+        with right_column:
+            user_input = st.text_input("", placeholder="Type in...")
+        if user_input:
+            fig = sns.pairplot(df, hue=user_input)
     st.pyplot(fig)
-
 else:
-    st.write('Please upload a .csv file')
+    st.write('Please upload a .csv file first.')
 
 footer_section()
