@@ -63,3 +63,4 @@ Distributed under the MIT License. See LICENSE.txt for more information.
 ## 🔗 Other resources
 
 Langchain PDF App: [Langchain](https://www.youtube.com/watch?v=wUAUdEw5oxM)
+Ask Book: [Article](https://bennycheung.github.io/ask-a-book-questions-with-langchain-openai)
