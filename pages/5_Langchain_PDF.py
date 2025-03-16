@@ -30,7 +30,8 @@ def main():
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
-
+        with st.expander("Click for extracted text"):
+            st.write(text)
         # split into chunks
         text_splitter = CharacterTextSplitter(
             separator="\n",
@@ -39,10 +40,17 @@ def main():
             length_function=len
         )
         chunks = text_splitter.split_text(text)
-
+        with st.expander("Click for chunks"):
+            st.write(chunks)
         # create embeddings
         embeddings = OpenAIEmbeddings(**st.secrets.openai)
+        single_vector = embeddings.embed_query("Konstitucija")
+        with st.expander("Click for embeddings"):
+            st.write(single_vector[:20])
+        # Facebook AI Similarity Search (FAISS)
         knowledge_base = FAISS.from_texts(chunks, embeddings)
+        with st.expander("Click for knowledge_base"):
+            st.write(knowledge_base)
 
         # show user input
         user_question = st.text_input("Ask a question about your PDF:")
