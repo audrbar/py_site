@@ -1,9 +1,8 @@
 import streamlit as st
 from PyPDF2 import PdfReader
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.chains.question_answering import load_qa_chain
 from langchain_community.llms import OpenAI
 from langchain_community.callbacks.manager import get_openai_callback
 from Home import footer_section
@@ -22,7 +21,9 @@ def main():
     st.header("Ask your PDF 💬")
 
     # upload file
-    pdf = st.file_uploader("Upload your PDF file to feed large language model:", type="pdf")
+    pdf = st.file_uploader(
+        "Upload your PDF file to feed large language model:", type="pdf"
+    )
 
     # extract the text
     if pdf is not None:
@@ -34,10 +35,7 @@ def main():
             st.write(text)
         # split into chunks
         text_splitter = CharacterTextSplitter(
-            separator="\n",
-            chunk_size=1000,
-            chunk_overlap=200,
-            length_function=len
+            separator="\n", chunk_size=1000, chunk_overlap=200, length_function=len
         )
         chunks = text_splitter.split_text(text)
         with st.expander("Click for chunks"):
@@ -46,7 +44,7 @@ def main():
         embeddings = OpenAIEmbeddings(**st.secrets.openai)
         single_vector = embeddings.embed_query("Konstitucija")
         with st.expander("Click for embeddings"):
-            st.write(single_vector[:20])
+            st.write(single_vector[:220])
         # Facebook AI Similarity Search (FAISS)
         knowledge_base = FAISS.from_texts(chunks, embeddings)
         with st.expander("Click for knowledge_base"):
@@ -58,14 +56,26 @@ def main():
             docs = knowledge_base.similarity_search(user_question)
 
             llm = OpenAI(**st.secrets.openai)
-            chain = load_qa_chain(llm, chain_type="stuff")
+
+            # Create context from documents
+            context = "\n\n".join([doc.page_content for doc in docs])
+
+            # Create prompt
+            prompt = f"""Answer the question based on the context below:
+
+Context: {context}
+
+Question: {user_question}
+
+Answer:"""
+
             with get_openai_callback() as cb:
-                response = chain.run(input_documents=docs, question=user_question)
+                response = llm.invoke(prompt)
             st.write(response)
             with st.expander("Click for service details"):
                 st.write(cb)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
     footer_section()
