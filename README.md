@@ -1,56 +1,167 @@
 ![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 ![Gluten Status](https://img.shields.io/badge/Gluten-Free-green.svg)
 ![Eco Status](https://img.shields.io/badge/ECO-Friendly-green.svg)
-# A Website to explore Data Science projects
 
-Hi :wave:, and welcome to the Data Science Website build on Streamlit.
+# Data Science Multi-Page Application
+
+Hi :wave:, and welcome to the Data Science Website built with Streamlit.
 
 ## Description
-Application is built with *Python*, hosted on *Streamlit Community Cloud* and it's data are
-stored in *PostgreSQL*, hosted on _Supabase_.
+
+Application is built with **Python**, hosted on **Streamlit Community Cloud** and its data is stored in **PostgreSQL**, hosted on _Supabase_. The project uses modern **UV package manager** for fast dependency management.
+
+## Features
+
+-   📊 Interactive data exploration from CSV files
+-   🗂️ PostgreSQL-based project management system
+-   💰 Mortgage calculator with visualization
+-   🎨 Demonstration of various Streamlit UI elements
+-   🤖 AI-powered PDF question answering with LangChain & OpenAI
 
 ## Pages
-These are sources of main pages of a respected app:
 
-| File Name             | Description                                                            | Link                                    |
-|-----------------------|------------------------------------------------------------------------|-----------------------------------------|
-| Data_Explorer.py      | Explores Data Sets red from .csv files provided by user                | [LINK](./pages/1_Data_Explorer.py)      |
-| Project_Management.py | Executes project management tasks, reads and writes data to database   | [LINK](./pages/2_Project_management.py) |
-| Various_Elements.py   | Explores different built in Streamlit possibilities to use in web app  | [LINK](./pages/4_Various_Elements.py)   |
+These are the main pages of the application:
 
-## Installing Streamlit
+| File Name             | Description                                                          | Link                                    |
+| --------------------- | -------------------------------------------------------------------- | --------------------------------------- |
+| Data_Explorer.py      | Explores datasets read from .csv files provided by user              | [LINK](./pages/1_Data_Explorer.py)      |
+| Project_Management.py | Executes project management tasks, reads and writes data to database | [LINK](./pages/2_Project_management.py) |
+| mortgage_calc.py      | Interactive mortgage calculator with payment schedule visualization  | [LINK](./pages/3_mortgage_calc.py)      |
+| Various_Elements.py   | Explores different built-in Streamlit UI possibilities               | [LINK](./pages/4_Various_Elements.py)   |
+| Langchain_PDF.py      | AI assistant that answers questions about uploaded PDF documents     | [LINK](./pages/5_Langchain_PDF.py)      |
 
-_You can use the [requirements.txt](requirements.txt) file (red by command `pip freeze > .\requirements.txt`) to install all the required libraries,
-or if you already have pandas and numpy, you can just install streamlit by opening
-a command prompt / terminal and typing in:_
+## Installation
 
-`pip install -r .\requirements.txt`<br>
-or<br>
-`pip install streamlit`
+### Prerequisites
 
-## Running Streamlit
+-   Python 3.12 or higher
+-   UV package manager (recommended) or pip
 
-_Once Streamlit has been installed you can run the select file by typing the following in the command prompt/terminal:_
+### Using UV (Recommended)
 
-`streamlit run app.py`
+UV is a fast Python package manager. Install it first:
+
+```bash
+# On macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# On Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Then set up the project:
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd py_site
+
+# Create virtual environment
+uv venv
+
+# Activate virtual environment
+source .venv/bin/activate  # On macOS/Linux
+.venv\Scripts\activate     # On Windows
+
+# Install dependencies
+uv pip install -e .
+```
+
+### Using pip (Alternative)
+
+```bash
+# Install dependencies from requirements.txt
+pip install -r requirements.txt
+```
+
+## Configuration
+
+### Database Setup
+
+Create a `.streamlit/secrets.toml` file with your database credentials:
+
+```toml
+[connections.postgresql]
+dialect = "postgresql"
+host = "your-host.supabase.com"
+port = "5432"
+database = "postgres"
+username = "your-username"
+password = "your-password"
+
+[openai]
+api_key = "your-openai-api-key"
+```
+
+## Running the Application
+
+```bash
+# Make sure virtual environment is activated
+streamlit run Home.py
+```
+
+The application will open in your default browser at `http://localhost:8501`
+
+## Project Structure
+
+```
+py_site/
+├── Home.py                 # Main entry point
+├── pages/                  # Multi-page application pages
+├── src/                    # Database connection and table classes
+├── data/                   # Sample data and diagrams
+├── style/                  # Custom CSS
+├── images/                 # Static images
+├── tests/                  # Test files
+├── pyproject.toml          # UV/pip dependencies
+├── requirements.txt        # Pip requirements (legacy)
+└── README.md              # This file
+```
 
 ## Data Sources
-_For testing purposes the initial data set may be used:_
 
-| File Name       | Source                                | Source Link                   |
-|-----------------|---------------------------------------|-------------------------------|
-| movies.csv      | Some Demo Data for Data Explorer      | [LINK](./data/movies.csv)     |
-| initial_data.py | Some Demo Data for Project Management | [LINK](./src/initial_data.py) |
-## DataBase Diagram
-_DataBase Diagram was used to construct the database structure_
+For testing purposes, the following initial data sets are available:
 
-![DataBase Diagram](./data/tb_diagram.png)
-<br>
-### 🧪 Running tests
+| File Name       | Source                           | Source Link                   |
+| --------------- | -------------------------------- | ----------------------------- |
+| movies.csv      | Demo Data for Data Explorer      | [LINK](./data/movies.csv)     |
+| initial_data.py | Demo Data for Project Management | [LINK](./src/initial_data.py) |
 
-_There are tests writen for connection testing in [test directory](./data/test_conn.py). You can run it in console by command:_
+## Database Diagram
 
-`pytest`
+Database diagram used to construct the database structure:
+
+![Database Diagram](./data/tb_diagram.png)
+
+## Technology Stack
+
+-   **Framework**: Streamlit 1.37+
+-   **Language**: Python 3.12+
+-   **Package Manager**: UV
+-   **Database**: PostgreSQL (Supabase)
+-   **ORM**: SQLAlchemy 2.0+
+-   **AI/ML**: LangChain, OpenAI, FAISS
+-   **Data Processing**: Pandas, NumPy
+-   **Visualization**: Matplotlib, Seaborn
+
+## Dependencies
+
+Core dependencies are managed in `pyproject.toml`:
+
+-   streamlit, pandas, numpy (core)
+-   psycopg2-binary, SQLAlchemy (database)
+-   langchain, openai, faiss-cpu (AI/ML)
+-   matplotlib, seaborn (visualization)
+
+See [pyproject.toml](./pyproject.toml) for complete list.
+
+## 🧪 Running Tests
+
+Tests are available in the [tests directory](./tests/). Run them with pytest:
+
+```bash
+pytest
+```
 
 ## 🎅 Authors
 
@@ -58,8 +169,11 @@ Audrius: [Github](https://github.com/audrbar)
 
 ## ⚠️ License
 
-Distributed under the MIT License. See LICENSE.txt for more information.
+Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
 
-## 🔗 Other resources
+## 🔗 Resources
 
-Langchain PDF App: [Langchain](https://www.youtube.com/watch?v=wUAUdEw5oxM)
+-   [Streamlit Documentation](https://docs.streamlit.io/)
+-   [LangChain Documentation](https://python.langchain.com/)
+-   [UV Package Manager](https://github.com/astral-sh/uv)
+-   [Langchain PDF Tutorial](https://www.youtube.com/watch?v=wUAUdEw5oxM)

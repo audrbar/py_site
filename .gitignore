@@ -134,6 +134,9 @@ env.bak/
 venv.bak/
 pyvenv.cfg
 
+# UV package manager
+uv.lock
+
 # Spyder project settings
 .spyderproject
 .spyproject
