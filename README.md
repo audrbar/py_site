@@ -177,3 +177,5 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 -   [LangChain Documentation](https://python.langchain.com/)
 -   [UV Package Manager](https://github.com/astral-sh/uv)
 -   [Langchain PDF Tutorial](https://www.youtube.com/watch?v=wUAUdEw5oxM)
+Langchain PDF App: [Langchain](https://www.youtube.com/watch?v=wUAUdEw5oxM)
+Ask Book: [Article](https://bennycheung.github.io/ask-a-book-questions-with-langchain-openai)
